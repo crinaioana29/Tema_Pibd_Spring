@@ -1,38 +1,49 @@
 package com.example.tema_pibd2.pharmacies;
 
+import com.example.tema_pibd2.employees.Employees;
+import com.example.tema_pibd2.locations.Locations;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 @Entity
-@Table
 public class Pharmacies {
-    @Id
     @SequenceGenerator(
             name = "pharmacies_sequence",
-            sequenceName = "phamacies_sequence",
+            sequenceName = "pharmacies_sequence",
             allocationSize = 1
     )
     @GeneratedValue(
             strategy = GenerationType.AUTO,
             generator = "pharmacies_sequence"
     )
+
+    @OneToMany(mappedBy = "locations")
+    @JsonIgnore
+    Set<Locations> locationsSet;
+    @OneToMany(mappedBy = "employees")
+    @JsonIgnore
+    Set<Employees> employeesSet;
+
+    @Id
     private Long idpharmacy;
     private String name;
-    private LocalDate est_year;
+    private int est_year;
 //defaul constructor
     public Pharmacies() {
     }
 
     public Pharmacies(Long idpharmacy,
                       String name,
-                      LocalDate est_year) {
+                      int est_year) {
         this.idpharmacy = idpharmacy;
         this.name = name;
         this.est_year = est_year;
     }
 
-    public Pharmacies(String name, LocalDate est_year) {
+    public Pharmacies(String name, int est_year) {
         this.name = name;
         this.est_year = est_year;
     }
@@ -53,11 +64,11 @@ public class Pharmacies {
         this.name = name;
     }
 
-    public LocalDate getEst_year() {
+    public int getEst_year() {
         return est_year;
     }
 
-    public void setEst_year(LocalDate est_year) {
+    public void setEst_year(int est_year) {
         this.est_year = est_year;
     }
 

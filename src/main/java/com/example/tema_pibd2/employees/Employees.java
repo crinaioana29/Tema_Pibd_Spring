@@ -1,5 +1,6 @@
 package com.example.tema_pibd2.employees;
 
+import com.example.tema_pibd2.pharmacies.Pharmacies;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -7,7 +8,7 @@ import java.time.LocalDate;
 @Entity
 @Table
 public class Employees {
-    @Id
+
     @SequenceGenerator(
             name = "employees_sequence",
             sequenceName = "employees_sequence",
@@ -17,6 +18,12 @@ public class Employees {
             strategy = GenerationType.AUTO,
             generator = "employees_sequence"
     )
+
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "idpharmacy")
+    Pharmacies pharmacy;
+
+    @Id
     private Long idemployee;
     private String surname;
     private String first_name;

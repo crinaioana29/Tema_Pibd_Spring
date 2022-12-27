@@ -1,11 +1,11 @@
 package com.example.tema_pibd2.locations;
 
+import com.example.tema_pibd2.pharmacies.Pharmacies;
 import jakarta.persistence.*;
 
 @Entity
 @Table
 public class Locations {
-    @Id
     @SequenceGenerator(
             name = "locations_sequence",
             sequenceName = "locations_sequence",
@@ -15,6 +15,11 @@ public class Locations {
             strategy = GenerationType.AUTO,
             generator = "locations_sequence"
     )
+
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "idpharmacy")
+    Pharmacies pharmacy;
+    @Id
     private Long idlocation;
     private String county;
     private String city;
