@@ -1,8 +1,22 @@
 package com.example.tema_pibd2.employees;
 
+import jakarta.persistence.*;
+
 import java.time.LocalDate;
 
+@Entity
+@Table
 public class Employees {
+    @Id
+    @SequenceGenerator(
+            name = "employees_sequence",
+            sequenceName = "employees_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.AUTO,
+            generator = "employees_sequence"
+    )
     private Long idemployee;
     private String surname;
     private String first_name;
