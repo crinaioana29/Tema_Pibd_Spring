@@ -1,21 +1,19 @@
 package com.example.tema_pibd2.employees;
 
+import com.example.tema_pibd2.pharmacies.Pharmacies;
+import com.example.tema_pibd2.pharmacies.PharmaciesService;
 import jakarta.transaction.Transactional;
-import jdk.jfr.Category;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-
+//internal logic of the application
 @Service
 public class EmployeesService {
 
     private final EmployeesRepository employeesRepository;
-
     @Autowired
     public EmployeesService(EmployeesRepository employeesRepository) {
         this.employeesRepository = employeesRepository;
@@ -24,13 +22,9 @@ public class EmployeesService {
     public List<Employees> getEmployees() {
         return employeesRepository.findAll();
     }
-
     public void addNewEmployee(Employees employee) {
         Optional<Employees> employeeOptional = employeesRepository
                 .findEmployeesBySurname(employee.getSurname());
-        if (employeeOptional.isPresent()) {
-            throw new IllegalStateException("surname taken");
-        }
         employeesRepository.save(employee);
         System.out.println(employee);
     }
@@ -44,6 +38,7 @@ public class EmployeesService {
     }
 
     @Transactional
+//    to wrap a method in a database transaction
     public void updateEmployee(Long employeeId, String surname, String first_name) {
         Employees employee = employeesRepository.findById(employeeId)
                 .orElseThrow(() -> new IllegalStateException(

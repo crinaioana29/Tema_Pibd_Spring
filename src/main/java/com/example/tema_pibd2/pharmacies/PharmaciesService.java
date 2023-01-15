@@ -1,9 +1,11 @@
 package com.example.tema_pibd2.pharmacies;
 
+import com.example.tema_pibd2.employees.Employees;
+import com.example.tema_pibd2.employees.EmployeesService;
+import com.example.tema_pibd2.locations.Locations;
+import com.example.tema_pibd2.locations.LocationsService;
 import jakarta.transaction.Transactional;
-import jdk.jfr.Category;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,22 +16,29 @@ import java.util.Optional;
 public class PharmaciesService {
 
     private final PharmaciesRepository pharmaciesRepository;
+    private final EmployeesService employeesService;
+    private final LocationsService locationsService;
     @Autowired
-    public PharmaciesService(PharmaciesRepository pharmaciesRepository) {
+    public PharmaciesService(PharmaciesRepository pharmaciesRepository,
+                             EmployeesService employeesService,
+                             LocationsService locationsService) {
         this.pharmaciesRepository = pharmaciesRepository;
+        this.employeesService = employeesService;
+        this.locationsService = locationsService;
     }
 
     public List<Pharmacies> getPharmacies() {
         return pharmaciesRepository.findAll();
     }
+
     public void addNewPharmacy(Pharmacies pharmacy) {
-        Optional<Pharmacies> pharmacyOptional = pharmaciesRepository.
-                findPharmaciesByName(pharmacy.getName());
-        if(pharmacyOptional.isPresent()) {
-            throw new IllegalStateException("county taken");
-        }
+        Locations aux=pharmacy.getLocation();
+        aux.setPharmacy(pharmacy);
+        Employees aux_employee=pharmacy.getEmployee();
+        aux_employee.setPharmacy(pharmacy);
+        pharmacy.addToLocationsList(aux);
+        pharmacy.addToEmployeesList(aux_employee);
         pharmaciesRepository.save(pharmacy);
-        System.out.println(pharmacy);
     }
 
     public void deletePharmacy(Long pharmacyId) {

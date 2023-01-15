@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
+        crossorigin="anonymous" />
+
+  <meta charset="UTF-8">
+  <title>Add new Pharmacy</title>
+</head>
+<body>
+<div class="container">
+
+  <h3>Add New Pharmacy</h3>
+  <hr/>
+
+  <form class="contact_form" method="POST" th:action="@{/api/v1/Pharmacies/add/save/}" th:object="${pharmacy}">
+    <input type="text" th:field="*{name}" class="form-control col-4 mb-4" placeholder="Enter Name" />
+
+    <input type="text" th:field="*{est_year}" class="form-control col-4 mb-4" placeholder="Enter Est. Year" />
+
+    <input type="text" th:field="*{employee.first_name}" class="form-control col-4 mb-4" placeholder="Enter Employee FirstName" />
+    <input type="text" th:field="*{employee.surname}" class="form-control col-4 mb-4" placeholder="Enter Employee Surname" />
+    <input type="text" th:field="*{employee.date_of_birth}" class="form-control col-4 mb-4" placeholder="Enter Employee Date Of birth" />
+    <input type="text" th:field="*{employee.empl_year}" class="form-control col-4 mb-4" placeholder="Enter Employee Empl. year" />
+
+    <input type="text" th:field="*{location.city}" class="form-control col-4 mb-4" placeholder="Enter City" />
+    <input type="text" th:field="*{location.county}" class="form-control col-4 mb-4" placeholder="Enter County" />
+
+    <button type="submit" class="btn btn-primary col-2">Add</button>
+    <input type="hidden" th:field="*{idpharmacy}" />
+
+  </form>
+  <hr/>
+  <a th:href="@{/api/v1/Locations}">Back to list</a>
+</div>
+</body>
+</html>

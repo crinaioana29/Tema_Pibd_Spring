@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+          integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
+          crossorigin="anonymous" />
+
+    <meta charset="UTF-8">
+    <title>Add new Employee</title>
+</head>
+<body>
+<div class="container">
+
+    <h3>Add New Employee</h3>
+    <hr/>
+
+    <form class="contact_form" method="POST" th:action="@{/api/v1/Employees/add/save/}" th:object="${employee}">
+        <input type="text" th:field="*{first_name}" class="form-control col-4 mb-4" placeholder="Enter First Name" />
+
+        <input type="text" th:field="*{surname}" class="form-control col-4 mb-4" placeholder="Enter Surname" />
+
+        <input type="text" th:field="*{date_of_birth}" class="form-control col-4 mb-4" placeholder="Enter Date Of Birth" />
+        <input type="text" th:field="*{empl_year}" class="form-control col-4 mb-4" placeholder="Enter Employ Year" />
+
+        <button type="submit" class="btn btn-primary col-2">Add</button>
+        <input type="hidden" th:field="*{idemployee}" />
+
+    </form>
+    <hr/>
+    <a th:href="@{/api/v1/Employees}">Back to list</a>
+</div>
+</body>
+</html>

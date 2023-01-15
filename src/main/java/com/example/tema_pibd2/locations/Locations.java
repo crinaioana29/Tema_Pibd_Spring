@@ -1,26 +1,38 @@
 package com.example.tema_pibd2.locations;
 
 import com.example.tema_pibd2.pharmacies.Pharmacies;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
 @Table
+// This tells Hibernate to make a table out of this class
 public class Locations {
+    @Id
     @SequenceGenerator(
             name = "locations_sequence",
             sequenceName = "locations_sequence",
             allocationSize = 1
     )
     @GeneratedValue(
-            strategy = GenerationType.AUTO,
+            strategy = GenerationType.IDENTITY,
             generator = "locations_sequence"
     )
-
+    private Long idlocation;
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "idpharmacy")
+    @JsonIgnore
     Pharmacies pharmacy;
-    @Id
-    private Long idlocation;
+
+    public Pharmacies getPharmacy() {
+        return pharmacy;
+    }
+
+    public void setPharmacy(Pharmacies pharmacy) {
+        this.pharmacy = pharmacy;
+    }
+
     private String county;
     private String city;
 //default constructor
@@ -63,6 +75,7 @@ public class Locations {
     }
 
     @Override
+//    method is used to return a string representation of an object
     public String toString() {
         return "Locations{" +
                 "idlocation=" + idlocation +

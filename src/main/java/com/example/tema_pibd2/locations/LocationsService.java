@@ -25,9 +25,9 @@ public class LocationsService {
     public void addNewLocation(Locations location) {
         Optional<Locations> locationOptional = locationsRepository
                 .findLocationsByCounty(location.getCounty());
-        if(locationOptional.isPresent()) {
-            throw new IllegalStateException("county taken");
-        }
+//        if(locationOptional.isPresent()) {
+//            throw new IllegalStateException("county taken");
+//        }
         locationsRepository.save(location);
         System.out.println(location);
     }
